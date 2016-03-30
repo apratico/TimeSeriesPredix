@@ -123,8 +123,8 @@ public class ClientSocket {
 		logger.debug(message);
 		try {				
 			if(isSocketOpen()){				
-				session.getBasicRemote().sendText(message);
-				session.getBasicRemote().flushBatch();
+			//	session.getBasicRemote().sendText(message);
+			//	session.getBasicRemote().flushBatch();
 				retValue = true;
 			}else{
 				forceReconnect();
