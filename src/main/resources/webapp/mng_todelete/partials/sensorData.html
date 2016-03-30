@@ -1,0 +1,14 @@
+<div class="sensor-list">
+	<div ng-repeat="sensor in appCtrl.sensorList" title="{{sensor}}" class="sd-item checkbox">
+		<label>
+		  <input
+		    type="checkbox"
+		    name="selectedFruits[]"
+		    value="{{sensor}}"
+		    ng-checked="selection.indexOf(sensor) > -1"
+		    ng-click="appCtrl.toggleSensorsSelection(sensor)"
+		  > {{sensor.sensor_id}} - {{sensor.sensor_ds}}
+		</label>
+	</div>
+</div>
+<sensor-graph data-sensor-data-list="appCtrl.sensorDataList"></sensor-graph>

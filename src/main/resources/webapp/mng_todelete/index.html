@@ -1,0 +1,115 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="vendor/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="vendor/angular-json-human/angular-json-human.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  	<link href="vendor/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  	<script src="vendor/jquery-1.12.1.min.js"></script>
+    <script src="vendor/lodash.js"></script>
+    <script src="vendor/angular.min.js"></script>
+    <script src="vendor/angular-animate.js"></script>
+    <script src="vendor/angular-resource.min.js"></script>
+    <script src="vendor/angular-json-human/angular-json-human.js"></script>
+    <script src="vendor/highstock.js"></script>
+	<script src="vendor/exporting.js"></script>
+	<script src="vendor/bootstrap-3.3.6/bootstrap.min.js"></script>
+  	<script src="vendor/bootstrap-3.3.6/ui-bootstrap-tpls-1.2.5.min.js"></script>
+   
+	<script src="js/controller.js"></script>
+	<script src="js/config.js"></script>
+    <script src="js/apiServices.js"></script>
+    <script src="js/directive.js"></script>
+    
+   
+  </head>
+  <body ng-controller="AppCtrl as appCtrl" ng-class="{'grey' : !appCtrl.accessToken}">
+  
+  	<!-- login -->
+	<div class="container login-wrapper" ng-if="!appCtrl.accessToken">
+
+	    <form id="signup">
+	
+	        <div class="header">
+	        
+	            <h3><i class="fa fa-mixcloud"></i>&nbsp;Timeseries Login</h3>
+	            
+	        </div>
+	        
+	        <div class="sep"></div>
+	
+	        <div class="inputs">
+	            <input type="username" ng-model="appCtrl.client_id" placeholder="Username" autofocus />
+	            <input type="password" ng-model="appCtrl.client_secret" placeholder="Password" />
+	            
+	            <div>{{appCtrl.loginStatus}}</div>
+	            
+	            <a id="submit" href="#" ng-click="appCtrl.login()">LOGIN</a>
+	        
+	        </div>
+	
+	    </form>
+	
+	</div>
+	
+	<div class="api-ref" ng-if="!appCtrl.accessToken">
+		<div class="inline icon-wrapper"><img src="img/swa_ico.gif" width="24"></div>
+		<div class="inline"><h4><a href="../api-doc" target="_blank">API documentation</a></h4></div>
+	</div>
+  	
+  	<div class="top-nav-bar" ng-if="appCtrl.accessToken">
+  		<div class="logo">
+  			<i class="fa fa-mixcloud"></i>
+  			Timeseries ingest manager 
+  		</div>
+  		<div class="btn-right" title="Logout" ng-click="appCtrl.logout();"><i class="fa fa-power-off"></i></div>
+  		<div class="status" ng-click="appCtrl.openStatusModal()">
+  			<div class="inline">STATUS
+  			<div class="inline" ng-if="appCtrl.status.status=='ACTIVE'">
+  				<i class="fa fa-play-circle"></i> {{appCtrl.status.status}}
+  			</div>
+  			<div class="inline" ng-if="appCtrl.status.status=='PAUSED'">
+  				<i class="fa fa-pause-circle"></i> {{appCtrl.status.status}}
+  			</div>
+  		</div>
+  	</div>
+  	
+  	<div class="left-nav-bar" ng-if="appCtrl.accessToken">
+  		<ul>
+  			<li title="Status" ng-class="{'selected' : appCtrl.currentModule == 'status'}" ng-click="appCtrl.openStatus()"><i class="fa fa-check-circle-o"></i></li>
+  			<li title="Sensors" ng-class="{'selected' : appCtrl.currentModule == 'sensors'}" ng-click="appCtrl.openSensorList()"><i class="fa fa-mixcloud"></i></li>
+  			<li title="Sensors data" ng-class="{'selected' : appCtrl.currentModule == 'sensorData'}" ng-click="appCtrl.openSensorData()"><i class="fa fa-line-chart"></i></li>
+  			<li><i class="fa fa-cogs"></i></li>
+  			<li title="Alarms"><i class="fa fa-bell" ng-click="appCtrl.openAlarmModal()"></i></li>
+  			<li><i class="fa fa-tachometer"></i></li>
+  			
+  		</ul>
+  	</div>
+  	
+  	<div class="main-container">
+  	
+	  	<!--  loading -->
+	  	<div class="div-veil" ng-show="appCtrl.showLoading"></div>
+	  	  <div class="div-spinner" ng-show="appCtrl.showLoading">
+			<svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-reload"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g transform="rotate(198 50 50)"><path d="M50 15A35 35 0 1 0 74.787 25.213" fill="none" stroke="#c1c1c1" stroke-width="12px"></path><path d="M50 0L50 30L66 15L50 0" fill="#c1c1c1"></path><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s" repeatCount="indefinite"></animateTransform></g></svg>
+	  	</div>
+			
+		<!-- STATUS -->
+		<div ng-if="appCtrl.currentModule == 'status'">
+			<div json-human="appCtrl.status"></div>
+		</div>
+		
+		<!-- SENSORS LIST -->
+		<div ng-if="appCtrl.currentModule == 'sensors'" ng-include="'partials/sensorList.html'"></div>
+		
+		<!-- SENSORS DATA -->
+		<div ng-if="appCtrl.currentModule == 'sensorData'" ng-include="'partials/sensorData.html'"></div>
+		
+	</div>
+  
+  </body>
+</html>

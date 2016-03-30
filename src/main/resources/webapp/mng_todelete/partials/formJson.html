@@ -1,0 +1,12 @@
+<div>
+	<form>
+	  <fieldset>
+	  	<div ng-repeat="(key, value) in json">
+	       <label for="{{key}}">{{key}}</label>
+	       <input id="{{key}}" type="text" ng-model="json[key]" ng-if="value.length<50" class="input-block-level">
+		   <textarea id="{{key}}" ng-model="json[key]" ng-if="value.length>49" class="input-block-level"></textarea>
+	    </div>
+	    <button type="submit" class="btn btn-primary" ng-click="submit()">SAVE CONFIG</button>
+	  </fieldset>
+	</form>
+</div>
