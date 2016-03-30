@@ -3,7 +3,7 @@ Welcome to Time Series Mock Application. This is a Java Application for calling 
 
 # Build it
 
-    From the command line, go the the project directory.
+From the command line, go the the project directory.
     Run as
 
-  mvn clean package
+    mvn clean package
