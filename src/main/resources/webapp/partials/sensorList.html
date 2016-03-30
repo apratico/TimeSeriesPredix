@@ -1,0 +1,43 @@
+<div class="sensor-list">
+	<div class="sl-item menu-item" ng-click="appCtrl.newSensor()">
+		<div>
+			<div><i class="fa fa-plus-square"></i>&nbsp;ADD SENSOR</div>
+		</div>
+	</div>
+	<div ng-repeat="sensor in appCtrl.sensorList" class="sl-item" ng-class="{'selected' : appCtrl.sensorSelected.sensor_id == sensor.sensor_id}" ng-click="appCtrl.sensorSelected = sensor">
+		<div class="sl-item-selected" ng-show="appCtrl.sensorSelected == sensor"><i class="fa fa-chevron-right"></i></div>
+		<div>
+			<div>{{sensor.asset_id}} - {{sensor.component_id}} - {{sensor.sensor_id}}</div>
+			<div>{{sensor.sensor_ds}}</div>
+		</div>
+	</div>
+</div>
+
+<div class="sensor-editing" ng-show="appCtrl.sensorSelected">
+
+	<!-- show data -->
+	<div class="edit-btn-wrapper" ng-show="!appCtrl.sensorSelectedTempCopy">
+		<button class="btn btn-default" ng-click="appCtrl.cloneSensor(appCtrl.sensorSelected)">Clone</button>
+		<button class="btn btn-default" ng-click="appCtrl.editSensor()">Edit</button>
+		<button class="btn btn-default" ng-click="appCtrl.deleteSensor()">Delete</button>
+	</div>
+	<div class="overflow">
+		<div ng-if="!appCtrl.sensorSelectedTempCopy" ng-repeat="(key, value) in appCtrl.sensorSelected">
+			<div><b>{{key}}</b>: {{value}}</div>
+		</div>
+	</div>
+	
+	<!-- edit data -->
+	<div class="edit-btn-wrapper" ng-show="appCtrl.sensorSelectedTempCopy">
+		<button class="btn btn-default" ng-click="appCtrl.saveSensorData()">Save</button>
+		<button class="btn btn-default" ng-click="appCtrl.sensorSelectedTempCopy = null">Cancel</button>
+	</div>
+	<div class="overflow">
+		<div ng-show="appCtrl.sensorSelectedTempCopy">
+		  	<div ng-repeat="(key, value) in appCtrl.sensorSelectedTempCopy">
+		       <label for="{{key}}">{{key}}</label>
+		       <input id="{{key}}" type="text" ng-model="appCtrl.sensorSelectedTempCopy[key]">
+		    </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-bell"></i>&nbsp;Manage Alarm</h3>
+</div>
+<div class="modal-body">
+    <div ng-repeat="(alarmId, sensorList) in alarmMap" class="radio">
+		<label>
+		    <input type="radio" ng-model="$parent.alarmType" name="alarmList" value="{{alarmId}}">
+		    <h5>ALARM&nbsp;{{alarmId}}</h5>
+	    </label>
+	    <div>
+	    	Involved sensors: <span ng-repeat="sensor in sensorList">{{sensor.sensor_id}}&nbsp;</span>
+    	</div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="ok()" ng-show="alarmType">Launch</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>
